@@ -3,12 +3,14 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import Home from './pages/home.vue'
 import About from './pages/tentang.vue'
+import Edit from './pages/Edits.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
 	{path: '/home', component: Home},
 	{path: '/about', component: About},
+	{path: '/edit', component: Edit}
 ]
 
 const router = new VueRouter({
