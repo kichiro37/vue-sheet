@@ -1,61 +1,97 @@
 <template>
-	<div>
-    <div class="form-home">
-      Form Home
-      <div class="input-form">
-        Nama: <input v-model="nama" placeholder="nama perusahaan" />
-      </div>
-      <div class="input-form">
-        Sponsor
-        <select v-model="sponsors" multiple>
-          <option>Sarimi</option>
-          <option>Indomnie</option>
-          <option>Aqua</option>
-          <option>Alfamart</option>
-          <option>Ubig</option>
-        </select>
-      </div>
-      <div>
-        <button v-on:click="SaveHome">
-          Simpan
-        </button>
-      </div>
-    </div>
-    <div class="output-home">
-      Output Home
-      <div class="output-body">
-        <div>Nama: {{nama}}</div>
-        <div>Sponsor: {{sponsors}}</div>
-      </div>
-    </div>
+	<div class="form-edit">
+		Form Edit
+		<div class="form-input">
+			Nama : 
+			<input v-model="nama" placeholder="Nama Perusahaan">
+		</div>
+		<div class="form-input">
+			Deskripsi :
+			<textarea v-model="deskripsi" placeholder="Deskripsi"></textarea>
+		</div>
+		<div class="form-input">
+			Game :
+			<input type="checkbox" id="GTA" value="GTA" v-model="checkedNames">
+			<label for="GTA"> GTA </label>
+			<input type="checkbox" id="Dota" value="Dota" v-model="checkedNames">
+			<label for="Dota"> Dota </label>
+			<input type="checkbox" id="Valorant" value="Valorant" v-model="checkedNames">
+			<label for="Valorant"> Valorant </label>
+			<input type="checkbox" id="HS" value="HS" v-model="checkedNames">
+			<label for="HS"> HS </label>
+		</div>
+		<div class="form-input">
+			Gender :
+			<input type="radio" id="male" value="Male" v-model="picked">
+			<label for="male">Male</label>
+			<input type="radio" id="female" value="Female" v-model="picked">
+			<label for="female">Female</label>
+		</div>
+		<div class="form-input">
+			Market Place :
+			<select v-model="selected" multiple>
+				<option>Steam</option>
+				<option>Epic Game</option>
+				<option>IGG</option>
+				<option>Ocean Garden</option>
+				<option>Windows</option>
+			</select>
+		</div>
+		<div class="form-button">
+			<button v-on:click="save"> SIMPAN </button>
+		</div>
+    <UserInf v-bind:paramsUser="paramsUser" />
 	</div>
 </template>
 
 <script>
-	export default {
-		name: 'edits',
-    data () {
-      return {
-        nama: null,
-        sponsors: []
-      }
-    },
-    methods: {
-      SaveHome() {
-        alert(`Data ${this.nama} Tersimpan`)
+import UserInf from '../components/UserInf.vue'
+
+export default {
+  name : 'Edit',
+  components: {
+    UserInf
+  },
+  data() {
+    return {
+      nama: null,
+      deskripsi: null,
+      checkedNames: [],
+      picked: null,
+      selected: [],
+      paramsUser: {}
+    }
+  },
+  methods: {
+    save() {
+      alert(`Data ${this.nama} Tersimpan`)
+      this.paramsUser = {
+        nama: this.nama,
+        deskripsi: this.deskripsi,
+        games: this.checkedNames,
+        gender: this.picked,
+        markets: this.selected
       }
     }
   }
-
+}
 </script>
 <style>
-.form-home {
-  margin-top: 10px
+.form-edit {
+	margin-top:10px;
 }
-.output-home .output-body {
-  border: solid 1px red;
-  padding: 50px;
-  margin: 0 30%;
-  text-align: left
+.form-input {
+	margin-top:10px;
+}
+.form-button {
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.output {
+	margin-top: 10px;
+	border: solid 1px orange;
+	padding: 50px;
+	margin: 0 30%;
+	text-align: left;
 }
 </style>
