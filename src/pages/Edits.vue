@@ -40,29 +40,17 @@
 		<div class="form-button">
 			<button v-on:click="save"> SIMPAN </button>
 		</div>
-		<div class="output">
-			<div>
-				Nama : {{nama}}
-			</div>
-			<div>
-				Deskripsi : {{deskripsi}}
-			</div>
-			<div>
-				Nama Game : {{checkedNames}}
-			</div>
-			<div>
-				Gender : {{picked}}
-			</div>
-			<div>
-				Market Place : {{selected}}
-			</div>
-		</div>
+    <UserInf v-bind:paramsInf="paramsInf" />
 	</div>
 </template>
 
 <script>
+	import UserInf from '../components/UserInf.vue'
 	export default {
-		name : 'Edit',
+		name : 'edits',
+		components: {
+			UserInf,
+  },
 	data() {
     return {
       nama: null,
@@ -70,13 +58,21 @@
       checkedNames: [],
       picked: null,
       selected: [],
+      paramsInf: {},
     }
   },
   methods: {
-      save() {
-        alert(`Data ${this.nama} Tersimpan`)
+    save() {
+      alert(`Data ${this.nama} Tersimpan`)
+      this.paramsInf = {
+      nama: this.nama,
+      deskripsi: this.deskripsi,
+      games: this.checkedNames,
+      gender: this.picked,
+      markets: this.selected
       }
     }
+  }
 }
 </script>
 <style>
