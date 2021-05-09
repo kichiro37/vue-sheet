@@ -20,8 +20,10 @@
 <script>
 export default {
   name: 'UserInf',
-  props: {
-    paramsUser: Object
+  computed: {
+    paramsUser () {
+      return this.$store.state.userInfo
+    }
   }
 }
 </script>

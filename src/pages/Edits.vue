@@ -40,7 +40,7 @@
 		<div class="form-button">
 			<button v-on:click="save"> SIMPAN </button>
 		</div>
-    <UserInf v-bind:paramsUser="paramsUser" />
+    <UserInf />
 	</div>
 </template>
 
@@ -72,6 +72,8 @@ export default {
         gender: this.picked,
         markets: this.selected
       }
+
+      this.$store.commit('SaveUserInfo', this.paramsUser)
     }
   }
 }
