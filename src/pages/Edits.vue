@@ -40,7 +40,7 @@
 		<div class="form-button">
 			<button v-on:click="save"> SIMPAN </button>
 		</div>
-    <UserInf v-bind:paramsInf="paramsInf" />
+      <UserInf />
 	</div>
 </template>
 
@@ -53,11 +53,11 @@
   },
 	data() {
     return {
-      nama: null,
-      deskripsi: null,
-      checkedNames: [],
-      picked: null,
-      selected: [],
+      nama: this.$store.state.userInfo.nama || null,
+      deskripsi: this.$store.state.userInfo.deskripsi || null,
+      checkedNames: this.$store.state.userInfo.games || [],
+      picked: this.$store.state.userInfo.gender || null,
+      selected: this.$store.state.userInfo.markets || [],
       paramsInf: {},
     }
   },
@@ -71,6 +71,8 @@
       gender: this.picked,
       markets: this.selected
       }
+
+      this.$store.commit('SaveUserInfo',this.paramsInf)
     }
   }
 }
