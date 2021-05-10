@@ -25,7 +25,7 @@ export default {
     paramsInf () {
       return this.$store.state.userInfo
     }
-  }
+ }
 }
 </script>
 <style>
