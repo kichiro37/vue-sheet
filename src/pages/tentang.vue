@@ -4,8 +4,12 @@
 		pages/About
 		<button v-on:click="GetEmployees"> Get Employees </button>
 	<div class="employees-container">
+		<div class="employees-inf">
+			<input type="text" v-model="name" class="employees-textfield" /> 
+			<input type="submit" label="add" @click="AddEmployee">
+		</div>
 		<div class="employees-inf" v-for="employee in employees" v-bind:key="employee.id">
-			{{employee.name}}
+			{{employee.id}} || {{employee.name}}
 		</div>
 	</div>
 	</div>
@@ -18,8 +22,12 @@
 
 	data () {
 		return {
-			employees: []
+			employees: [],
+			name: null
 		}
+	},
+	created () {
+		this.GetEmployees()
 	},
 	methods: {
 		async GetEmployees () {
@@ -41,7 +49,20 @@
         alert('error')
       })
     console.log('GetEmployees tentang 1', this.employees)
-	}
+	},
+	async AddEmployee () {
+		try {
+			const params = { 
+				name: this.name
+			}
+			const employee = await this.$store.dispatch('AddEmployee', params)
+			this.employees.push(employee)
+			this.name = ''
+			alert('Data Tersimpan')
+		} catch (err) {
+			alert('Opp Data tidak tersimpan')
+		}
+		}
 	}
 }
 
@@ -57,5 +78,10 @@
 .employees-inf {
 	border:solid 1px;
 	margin: 0 30%;
+	display: flex;
+	justify-content: space-between;
+}
+.employees-textfield {
+	width: 90%
 }
 </style>

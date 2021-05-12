@@ -71,7 +71,6 @@
       gender: this.picked,
       markets: this.selected
       }
-
       this.$store.commit('SaveUserInfo',this.paramsInf)
     }
   }
