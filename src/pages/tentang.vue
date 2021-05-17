@@ -8,8 +8,11 @@
 			<input type="text" v-model="name" class="employees-textfield" /> 
 			<input type="submit" label="add" @click="AddEmployee">
 		</div>
-		<div class="employees-inf" v-for="employee in employees" v-bind:key="employee.id">
-			{{employee.id}} || {{employee.name}}
+		<div class="employees-inf" v-for="(employee, employeeIndex) in employees" v-bind:key="employee.id">
+			<Employee 
+			:employee="employee" 
+			:employeeIndex="employeeIndex" 
+			@delete-employee="onDeleteEmployee"/>
 		</div>
 	</div>
 	</div>
@@ -17,9 +20,13 @@
 </template>
 
 <script>
+	import Employee from '../components/Employee.vue'
 	export default {
 		name : 'home',
 
+	components: {
+		Employee
+	},
 	data () {
 		return {
 			employees: [],
@@ -62,7 +69,11 @@
 		} catch (err) {
 			alert('Opp Data tidak tersimpan')
 		}
-		}
+		},
+	onDeleteEmployee(employeeIndex) {
+		alert(employeeIndex)
+		this.employees.splice(employeeIndex, 1)
+	}
 	}
 }
 
