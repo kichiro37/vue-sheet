@@ -3,7 +3,8 @@
 		components/Header<br>
 		<router-link to="/home">Home </router-link>
 		<router-link to="/about">About </router-link>
-		<router-link to="/edits">Edits</router-link>
+		<router-link to="/edits">Edits </router-link>
+		<router-link to="/task">Task</router-link>
 	</div>
 </template>
 

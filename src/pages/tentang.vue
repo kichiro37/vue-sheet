@@ -1,81 +1,98 @@
 <template>
-	<div id="tentang">
+	<div>
+	<div class="tentang">
 		pages/About
-    <button v-on:click="GetEmployees"> Get Employyes </button>
-    <div class="employee-container">
-      <div class="employee-inf">
-        <input class="employee-textfield" v-model="name" placeholder="Add Employees" />
-        <input type="submit" label="add" v-on:click="AddEmployee" />
-      </div>
-      <div class="employee-inf" v-for="employee in employees" v-bind:key="employee.id"> 
-        {{ employee.id }} || {{ employee.name }}
-      </div>
-    </div>
+		<button v-on:click="GetEmployees"> Get Employees </button>
+	<div class="employees-container">
+		<div class="employees-inf">
+			<input type="text" v-model="name" class="employees-textfield" /> 
+			<input type="submit" label="add" @click="AddEmployee">
+		</div>
+		<div class="employees-inf" v-for="(employee, employeeIndex) in employees" v-bind:key="employee.id">
+      <Employee 
+        :employee="employee"
+        :employeeIndex="employeeIndex"
+        @delete-employee="OnDeleteEmployee"
+        />
+		</div>
 	</div>
+	</div>
+</div>
 </template>
 
 <script>
+import Employee from '../components/Employee.vue'
 	export default {
 		name : 'home',
-    data () {
-      return {
-        employees: [],
-        name: null
-      }
+  components: {
+    Employee
+  },
+	data () {
+		return {
+			employees: [],
+			name: null
+		}
+	},
+	created () {
+		this.GetEmployees()
+	},
+	methods: {
+    OnDeleteEmployee (employeeIndex) {
+      alert(employeeIndex)
+      this.employees.splice(employeeIndex, 1)
     },
-    created() {
-      this.GetEmployees()
-    },
-    methods: {
-      async AddEmployee () {
-        try {
-          const params = {
-            name: this.name
-          }
-          const employee = await this.$store.dispatch('AddEmployees', params)
-          this.employees.push(employee)
-        } catch (err) {
-          console.log(err)
-        }
-
-        this.name = null
-      },
-      async GetEmployees () {
-        console.log('GetEmployees tentang 0', this.employees)
-        try {
-          this.employees = await this.$store.dispatch('GetEmployees')
-        } catch (err) {
-          alert('error')
-        }
-        console.log('GetEmployees tentang 1', this.employees)
-      },
-      GetEmployeesThen () {
-        console.log('GetEmployees tentang 0', this.employees)
-         this.$store.dispatch('GetEmployees')
-          .then(resp => {
-            this.employees = resp
-          })
-          .catch(() => {
-            alert('error')
-          })
-        console.log('GetEmployees tentang 1', this.employees)
-      }
+		async GetEmployees () {
+    console.log('GetEmployees tentang 0', this.employees)
+    try {
+      this.employees = await this.$store.dispatch('GetEmployees')
+    } catch (err) {
+      alert('error')
     }
-  }
+    console.log('GetEmployees tentang 1', this.employees)
+  },
+  GetEmployeesThen () {
+    console.log('GetEmployees tentang 0', this.employees)
+     this.$store.dispatch('GetEmployees')
+      .then(resp => {
+        this.employees = resp
+      })
+      .catch(() => {
+        alert('error')
+      })
+    console.log('GetEmployees tentang 1', this.employees)
+	},
+	async AddEmployee () {
+		try {
+			const params = { 
+				name: this.name
+			}
+			const employee = await this.$store.dispatch('AddEmployees', params)
+			this.employees.push(employee)
+			this.name = ''
+			alert('Data Tersimpan')
+		} catch (err) {
+			alert('Opp Data tidak tersimpan')
+		}
+		}
+	}
+}
 
 </script>
+
 <style>
-#tentang .employee-container {
-  border: solid 1px black;
-  text-align: left
+.tentang {
+	margin-top: 10px;
 }
-#tentang .employee-inf {
-  border-bottom: solid 1px black;
-  padding: 5px 10px;
-  display: flex;
-  justify-content: space-between
+.employees-container {
+	margin-top: 10px;
 }
-#tentang .employee-inf .employee-textfield {
-  width: 90%
+.employees-inf {
+	border:solid 1px;
+	margin: 0 30%;
+	display: flex;
+	justify-content: space-between;
+}
+.employees-textfield {
+	width: 90%
 }
 </style>

@@ -17,7 +17,7 @@ axios.defaults.baseURL =  'https://jsonplaceholder.typicode.com'
 const routes = [
 	{path: '/home', component: Home},
 	{path: '/about', component: About},
-	{path: '/edits', component: Edits},
+	{path: '/edits', component: Edits}
 ]
 
 const router = new VueRouter({
@@ -41,6 +41,17 @@ const store = new Vuex.Store({
     }
   },
   actions: {
+    GetTodos () {
+      return new Promise ((resolve, reject) => {
+        axios.get('/todos')
+          .then(resp => {
+            resolve(resp.data)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    },
     GetEmployees () {
       return new Promise ((resolve, reject) => {
         console.log('GetEmployees main.js 0')
