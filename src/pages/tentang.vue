@@ -13,6 +13,7 @@
         :employee="employee"
         :employeeIndex="employeeIndex"
         @delete-employee="OnDeleteEmployee"
+        @update-employee="OnUpdateEmployee"
         />
 		</div>
 	</div>
@@ -37,6 +38,9 @@ import Employee from '../components/Employee.vue'
 		this.GetEmployees()
 	},
 	methods: {
+    OnUpdateEmployee (employee) {
+      this.employees[employee.index].name = employee.name
+    },
     OnDeleteEmployee (employeeIndex) {
       alert(employeeIndex)
       this.employees.splice(employeeIndex, 1)
