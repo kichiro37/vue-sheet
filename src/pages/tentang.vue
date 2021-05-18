@@ -12,7 +12,8 @@
 			<Employee 
 			:employee="employee" 
 			:employeeIndex="employeeIndex" 
-			@delete-employee="onDeleteEmployee"/>
+			@delete-employee="onDeleteEmployee"
+			@update-employee="onUpdateEmployee"/>
 		</div>
 	</div>
 	</div>
@@ -73,6 +74,9 @@
 	onDeleteEmployee(employeeIndex) {
 		alert(employeeIndex)
 		this.employees.splice(employeeIndex, 1)
+	},
+	onUpdateEmployee(employee) {
+		this.employees[employee.index].name = employee.name
 	}
 	}
 }
